@@ -30,3 +30,9 @@ Thumbs.db
 
 /.agents
 /.claude
+
+/AGENTS.md
+/CLAUDE.md
+/.mcp.json
+/opencode.json
+/boost.json
