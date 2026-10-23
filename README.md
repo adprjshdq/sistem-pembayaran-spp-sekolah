@@ -1,58 +1,201 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# EduPay SPP
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi pembayaran SPP sekolah berbasis Laravel. Admin mengelola tahun ajaran, kelas, tarif, siswa, tagihan, pembayaran, dan laporan. Siswa dapat melihat tunggakan, membayar tagihan secara online melalui Midtrans, serta mengunduh/mencetak kwitansi.
 
-## About Laravel
+## Fitur
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Admin
+- Dashboard ringkasan siswa aktif, tagihan bulan berjalan, penerimaan, tunggakan, grafik 6 bulan, dan persentase kelunasan per kelas.
+- Pengelolaan tahun ajaran dengan satu tahun ajaran aktif.
+- Pengelolaan kelas dan tarif SPP per tingkat (X, XI, XII).
+- Pengelolaan siswa beserta akun login siswa.
+- Pembuatan tagihan manual dan generate tagihan massal per bulan.
+- Generate tagihan aman diulang karena tagihan yang sudah ada dilewati.
+- Pencatatan pembayaran tunai/transfer yang langsung melunasi tagihan.
+- Pembayaran online melalui Midtrans Snap.
+- Kwitansi digital siap cetak.
+- Laporan pembayaran dengan filter tahun ajaran, bulan, tahun, kelas, status, dan pencarian.
+- Ekspor laporan ke CSV.
+- Pengaturan identitas sekolah, bendahara, kepala sekolah, dan catatan kwitansi.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Siswa
+- Login menggunakan email atau NIS.
+- Dashboard tunggakan dan status pembayaran.
+- Daftar tagihan per bulan.
+- Pembayaran online beberapa tagihan sekaligus.
+- Riwayat pembayaran dan kwitansi.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Teknologi
 
-## Learning Laravel
+- PHP 8.3+ (diuji pada PHP 8.4)
+- Laravel 13
+- SQLite (default) atau database lain yang didukung Laravel
+- Tailwind CSS 4
+- Vite 8
+- PHPUnit 12
+- Midtrans Snap
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Persyaratan
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP 8.3 atau lebih baru dengan ekstensi `pdo_sqlite`
+- Composer 2
+- Node.js 20.19+ atau 22.12+
+- npm
+- Git
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Instalasi
 
 ```bash
-composer require laravel/boost --dev
+git clone <URL_REPOSITORY> "Sistem Pembayaran Spp Sekolah"
+cd "Sistem Pembayaran Spp Sekolah"
 
-php artisan boost:install
+composer install
+
+# Windows
+copy .env.example .env
+
+# Linux/macOS
+cp .env.example .env
+
+php artisan key:generate
+
+# Windows PowerShell
+New-Item -ItemType File -Path database\database.sqlite -Force
+
+# Linux/macOS
+touch database/database.sqlite
+
+php artisan migrate --seed
+
+npm install
+npm run build
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Sesuaikan `APP_URL` di `.env` jika aplikasi tidak berjalan di `http://localhost:8000`.
 
-## Contributing
+## Menjalankan Aplikasi
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Jalankan server Laravel dan Vite di dua terminal:
 
-## Code of Conduct
+```bash
+php artisan serve
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+npm run dev
+```
 
-## Security Vulnerabilities
+Atau gunakan:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+composer run dev
+```
 
-## License
+Buka `http://localhost:8000`. Jika port 8000 sudah dipakai, gunakan port lain dan sesuaikan `APP_URL`:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan serve --port=8001
+```
+
+## Akun Demo
+
+Data demo dibuat oleh `DatabaseSeeder`.
+
+| Peran | Login | Kata sandi |
+| --- | --- | --- |
+| Admin | `admin@edupay.test` | `password` |
+| Siswa | `20261001` | `password` |
+
+Siswa demo `20261001` memiliki tagihan Juli-Oktober 2026 dengan Juli dan Agustus sudah lunas, sedangkan September dan Oktober belum dibayar. Seluruh siswa demo menggunakan kata sandi `password`.
+
+Data demo mencakup 24 siswa, 6 kelas, tarif SPP X/XI/XII, tagihan Juli-Oktober 2026, dan sebagian pembayaran.
+
+## Konfigurasi Midtrans
+
+Tambahkan kredensial Midtrans pada `.env`:
+
+```env
+MIDTRANS_SERVER_KEY=your-server-key
+MIDTRANS_CLIENT_KEY=your-client-key
+MIDTRANS_IS_PRODUCTION=false
+```
+
+- `MIDTRANS_IS_PRODUCTION=false` menggunakan environment sandbox.
+- Jika `MIDTRANS_SERVER_KEY` kosong, aplikasi berjalan dalam mode simulasi: pembayaran online langsung dianggap berhasil tanpa memanggil Midtrans.
+- Atur URL notifikasi Midtrans ke `{APP_URL}/payments/callback`.
+- Endpoint callback memvalidasi signature SHA512 dan hanya memproses invoice yang valid.
+
+Untuk production, gunakan URL HTTPS yang dapat diakses publik, set `APP_DEBUG=false`, dan isi kredensial Midtrans production.
+
+## Alur Sistem
+
+1. Admin mengatur tahun ajaran aktif, tarif SPP per tingkat, kelas, dan siswa.
+2. Admin membuat tagihan manual atau generate tagihan bulanan untuk seluruh siswa.
+3. Siswa membayar melalui portal, atau admin mencatat pembayaran tunai/transfer.
+4. `PaymentService` membuat invoice dan `payment_items`, lalu memperbarui `paid_amount` serta status tagihan menjadi `unpaid`, `partial`, atau `paid`.
+5. Status pembayaran diperbarui melalui Midtrans callback atau pengecekan status di halaman finish.
+6. Siswa dan admin dapat melihat riwayat serta mencetak kwitansi.
+7. Admin memantau dashboard dan mengekspor laporan pembayaran ke CSV.
+
+Status tagihan: `unpaid`, `partial`, `paid`.
+
+Status pembayaran: `pending`, `success`, `failed`.
+
+## Struktur Proyek
+
+```text
+app/
+  Enums/                     Status tagihan, pembayaran, dan peran pengguna
+  Http/
+    Controllers/
+      Admin/                 Dashboard, master data, tagihan, pembayaran, laporan
+      Auth/                  Login dan logout
+      Portal/                Dashboard, tagihan, dan pembayaran siswa
+      PaymentCallbackController.php
+  Models/                    AcademicYear, SchoolClass, Student, Fee, Bill, Payment, PaymentItem, Setting, User
+  Services/
+    MidtransService.php      Integrasi Midtrans Snap dan validasi callback
+    PaymentService.php       Pembuatan pembayaran dan pembaruan status tagihan
+  Support/helpers.php        Helper rupiah() dan school_setting()
+
+database/
+  migrations/                Skema database
+  seeders/DatabaseSeeder.php Data demo
+
+resources/
+  css/app.css                Tailwind dan token warna
+  views/                     Halaman admin, portal, auth, dan kwitansi
+
+routes/web.php               Seluruh route aplikasi
+tests/Feature/               Tes autentikasi, tagihan, pembayaran, akses, dan laporan
+```
+
+## Pengujian
+
+```bash
+php artisan test
+```
+
+Menjalankan tes tertentu:
+
+```bash
+php artisan test tests/Feature/PaymentTest.php
+```
+
+Memformat kode PHP:
+
+```bash
+vendor/bin/pint --dirty
+```
+
+## Keamanan
+
+- File `.env` dan database SQLite lokal tidak disertakan ke Git.
+- Jangan pernah meng-commit `MIDTRANS_SERVER_KEY` atau kredensial lain.
+- Ganti kata sandi akun demo sebelum aplikasi digunakan di lingkungan nyata.
+- Gunakan HTTPS di production.
+- Cadangkan database secara berkala.
+
+## Lisensi
+
+Proyek ini menggunakan lisensi MIT.
